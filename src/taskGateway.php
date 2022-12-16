@@ -23,7 +23,7 @@ class taskGateway
 					echo json_encode (['status'=>'failed','msg'=>'Users date_entered did not provided!']);
 
 		}elseif($data->shop_id==''){
-					echo json_encode (['status'=>'failed','msg'=>'Users shop_id did not provided!']);
+					echo json_encode (['status'=>'failed','msg'=>'Users shop_id didnt provided!']);
 		}elseif($data->username==''){
 					echo json_encode (['status'=>'failed','msg'=>'Users username didnt provided!']);
 		}elseif($data->password==''){
