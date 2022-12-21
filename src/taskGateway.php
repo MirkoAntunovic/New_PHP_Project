@@ -196,10 +196,10 @@ class taskGateway
      *
      *   tags={"Get transaction"},
      *   @OA\RequestBody(
-     *  @OA\MediaType(
-     *   mediaType="application/json",
-     *  @OA\Schema(required={"id"},
-     *  @OA\Property(property="id", type="integer"))
+     *       @OA\MediaType(
+     *          mediaType="application/json",
+     *       @OA\Schema(required={"id"},
+     *       @OA\Property(property="id", type="integer"))
      *
      *         )
      *
