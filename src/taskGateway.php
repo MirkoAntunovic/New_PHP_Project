@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @OA\Info(title="Search API this is test", version="1.0.0")
+ */
 class taskGateway
 {
 	private PDO $conn;
@@ -188,39 +190,66 @@ class taskGateway
 
 	}
 
+	/**
+     *    @OA\Post(
+     *   path="/start/allTransaction",
+     *
+     *   tags={"Get transaction"},
+     *   @OA\RequestBody(
+     *  @OA\MediaType(
+     *   mediaType="application/json",
+     *  @OA\Schema(required={"id"},
+     *  @OA\Property(property="id", type="integer"))
+     *
+     *         )
+     *
+     * ),
+     *
+     *
+     *   @OA\Response(response="200", description="An example resource"),
+     *   @OA\Response(response="404", description="Not Found"),
+     * )
+     *
+     */
+
+
+
+
 	//Pregled svih transakcija za shop
-	public function allTransaction():array
+	public function allTransaction()
 	{
+		$date=json_decode(file_get_contents("php://input"));
+		$id=$date->id;
+        $query="SELECT * FROM `transaction` WHERE `shop_id`IN(SELECT `shop_id` from transaction) and id=:id";
+        $response=array();
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id",$id);
 
-		  $query="SELECT * FROM `transaction` WHERE `shop_id`IN(SELECT `shop_id` from transaction)";
-          $response=array();
-          $stmt = $this->conn->prepare($query);
-
-          $stmt->execute();
-          $response=array();
+        $stmt->execute();
+        $response=array();
 
         if($stmt)
 		{
-	      $i=0;
-	      $data=[];
+            $i=0;
+            $data=array();
 
-	    while($row = $stmt->fetch(PDO::FETCH_ASSOC))
-		{
-		  $response[$i]['id']=$row['id'];
-		  $response[$i]['date_entered']=$row['date_entered'];
-		  $response[$i]['shop_id']=$row['shop_id'];
-		  $response[$i]['barcode']=$row['barcode'];
-		  $response[$i]['amount']=$row['amount'];
-		  $response[$i]['start_amount']=$row['start_amount'];
-		  $response[$i]['end_amount']=$row['end_amount'];
-		  $response[$i]['end_amount']=$row['end_amount'];
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC))
+            {
+                $response[$i]['id']=$row['id'];
+                $response[$i]['date_entered']=$row['date_entered'];
+                $response[$i]['shop_id']=$row['shop_id'];
+                $response[$i]['barcode']=$row['barcode'];
+                $response[$i]['amount']=$row['amount'];
+                $response[$i]['start_amount']=$row['start_amount'];
+                $response[$i]['end_amount']=$row['end_amount'];
+                $response[$i]['end_amount']=$row['end_amount'];
 
-		  $data=$response;
-		  $i++;
+                $data=$response;
+                $i++;
+            }
+
 	    }
-
-	    }
-	return $data;
+        return $data;
 
 	}
 
