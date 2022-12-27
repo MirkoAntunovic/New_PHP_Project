@@ -133,6 +133,60 @@ class taskGateway
 
     }
 
+
+	/**
+     *    @OA\Post(
+     *   path="/start/create-shop",
+     *
+     * summary="Create a shop.", tags={"Post"},
+     * @OA\RequestBody(
+     *    @OA\MediaType(
+     *        mediaType="application/json",
+     *        @OA\Schema(
+     *
+     *           @OA\Property(
+     *                property="id",
+     *                type="integer",
+     *                example="1",
+     *            ),
+     *
+     *
+     *            @OA\Property(
+     *                property="date_entered",
+     *                type="varchar",
+     *                 example="11",
+     *            ),
+     *
+     *            @OA\Property(
+     *                property="name",
+     *                type="string",
+     *                 example="nameofshop",
+     *
+     *            ),
+     *
+     *
+     *              @OA\Property(
+     *                property="email",
+     *                type="varchar",
+     *                example="mirko43@test.com",
+     *            ),
+     *
+     *
+     *
+     *              @OA\Property(
+     *                property="status",
+     *                type="varchar",
+     *                example="activ",
+     *            ),
+     *        ),
+     *    ),
+     * ),
+     * @OA\Response(response="200", description="Success"),
+     * @OA\Response(response="404", description="Not found"),
+     * )
+     */
+
+
 	//Kreiranje Shopa
 	public function CreateShop()
 	{
@@ -170,6 +224,73 @@ class taskGateway
         }
 
 	}
+
+    /**
+     *    @OA\Post(
+     *   path="/start/create-transaction",
+     *
+     * summary="Create a transaction.", tags={"Post"},
+     * @OA\RequestBody(
+     *    @OA\MediaType(
+     *        mediaType="application/json",
+     *        @OA\Schema(
+     *            @OA\Property(
+     *                property="id",
+     *                type="integer",
+     *                 example="4",
+     *            ),
+     *            @OA\Property(
+     *                property="date_entered",
+     *                type="varchar",
+     *                 example="11",
+     *            ),
+     *            @OA\Property(
+     *                property="shop_id",
+     *                type="integer",
+     *                example="1",
+     *            ),
+     *
+     *              @OA\Property(
+     *                property="barcode",
+     *                type="integer",
+     *                example="1216361346",
+     *            ),
+     *
+     *            @OA\Property(
+     *                property="type",
+     *                type="varchar",
+     *                example="test",
+     *            ),
+     *              @OA\Property(
+     *                property="amount",
+     *                type="integer",
+     *                example="255",
+     *            ),
+     *             @OA\Property(
+     *                property="start_amount",
+     *                type="integer",
+     *                example="10",
+     *            ),
+     *            @OA\Property(
+     *                property="end_amount",
+     *                type="integer",
+     *                example="2000",
+     *            ),
+     *            @OA\Property(
+     *                property="comment",
+     *                type="string",
+     *                example="This is comment",
+     *            ),
+     *        ),
+     *    ),
+     * ),
+     * @OA\Response(response="200", description="Success"),
+     * @OA\Response(response="404", description="Not found"),
+     * )
+     */
+
+
+
 	//Kreiranje transakcije
 	public function CreateTransaction()
 	{
@@ -223,6 +344,63 @@ class taskGateway
 
 	}
 
+
+
+    /**
+     *    @OA\Post(
+     *   path="/start/create-card",
+     *
+     * summary="Create a card.", tags={"Post"},
+     * @OA\RequestBody(
+     *    @OA\MediaType(
+     *        mediaType="application/json",
+     *        @OA\Schema(
+     *            @OA\Property(
+     *                property="id",
+     *                type="integer",
+     *                 example="4",
+     *            ),
+     *            @OA\Property(
+     *                property="date_entered",
+     *                type="varchar",
+     *                 example="11",
+     *            ),
+     *            @OA\Property(
+     *                property="barcode",
+     *                type="integer",
+     *                example="322423423",
+     *            ),
+     *
+     *              @OA\Property(
+     *                property="amount",
+     *                type="integer",
+     *                example="500",
+     *            ),
+     *
+     *            @OA\Property(
+     *                property="last_payment",
+     *                type="varchar",
+     *                example="1.1",
+     *            ),
+     *              @OA\Property(
+     *                property="amount",
+     *                type="integer",
+     *                example="255",
+     *            ),
+     *             @OA\Property(
+     *                property="status",
+     *                type="type",
+     *                example="test",
+     *            ),
+     *
+     *        ),
+     *    ),
+     * ),
+     * @OA\Response(response="200", description="Success"),
+     * @OA\Response(response="404", description="Not found"),
+     * )
+     */
+
 	//Kreiranje kartice
 	public function CreateCard()
 	{
@@ -271,7 +449,7 @@ class taskGateway
     /**
      *    @OA\Post(
      *   path="/start/all-transaction",
-     *
+     *   summary="Get all transaction",
      *   tags={"Post"},
      *   @OA\RequestBody(
      *       @OA\MediaType(
@@ -340,6 +518,18 @@ class taskGateway
 
 	}
 
+
+
+    /**
+     * @OA\Get(
+     * path="/start/amount-transaction",
+     * summary="Get amount for transaction",
+     * tags={"Get"},
+     * @OA\Response(response="200", description="Success"),
+     * @OA\Response(response="404", description="Not found"),
+     * )
+     */
+
 	//Provjera stanja i svih transakcija na kartici (putem barkoda)
 	public function amountAndTransaction() : array
 	{
@@ -371,6 +561,29 @@ class taskGateway
 	return $data;
 
 	}
+
+
+    /**
+     *    @OA\Post(
+     *   path="/start/supplement-card",
+     *   summary="Supplement the card",
+     *   tags={"Post"},
+     *   @OA\RequestBody(
+     *       @OA\MediaType(
+     *          mediaType="application/json",
+     *       @OA\Schema(required={"amount"},
+     *       @OA\Property(property="amount", type="integer"))
+     *
+     *         )
+     *
+     * ),
+     *
+     *
+     *   @OA\Response(response="200", description="An example resource"),
+     *   @OA\Response(response="404", description="Not Found"),
+     * )
+     *
+     */
 
 	//Nadopuna kartice
 	public function supplementCard()
@@ -404,6 +617,32 @@ class taskGateway
 
 
 	}
+
+
+    /**
+     *    @OA\Post(
+     *   path="/start/login",
+     *   summary="Login",
+     *   tags={"Post"},
+     *   @OA\RequestBody(
+     *       @OA\MediaType(
+     *          mediaType="application/json",
+     *       @OA\Schema(required={"username","password"},
+     *       @OA\Property(property="username", type="string"),
+     *       @OA\Property(property="password", type="string"),
+     * ),
+     *
+     *         ),
+     *
+     * ),
+     *
+     *
+     *   @OA\Response(response="200", description="An example resource"),
+     *   @OA\Response(response="404", description="Not Found"),
+     * )
+     *
+     */
+
 
 	//login
 	public function login ()

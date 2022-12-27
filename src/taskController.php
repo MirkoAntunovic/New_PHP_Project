@@ -47,7 +47,7 @@ class taskController
                         break;
 
 
-						case "CreateShop" :
+						case "create-shop" :
 
 					    $this->gateway->CreateShop();
 						break;
@@ -59,7 +59,7 @@ class taskController
 						 break;
 
 
-						 case "CreateCard":
+						 case "create-card":
 
 						 $this->gateway->CreateCard();
 						 break;
@@ -80,13 +80,13 @@ class taskController
 
 
 
-						 case "amountAndTransaction":
+						 case "amount-transaction":
                              $response = $this->gateway->amountAndTransaction();
 						 echo json_encode($response);
 						 break;
 
 
-						 case "supplementCard":
+						 case "supplement-card":
 						 $this->gateway->supplementCard();
 						 break;
 
