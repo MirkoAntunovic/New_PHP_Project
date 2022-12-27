@@ -34,14 +34,14 @@ class taskController
 	}
 
 
-	private function processResourceRequest(string $method, string $endpoint): void
+	private function processResourceRequest(string $method, string $endpoint):void
 	{
 
 						switch ($endpoint)
 				{
 
 
-				        case "CreateUser" :
+				        case "create-user" :
 
                         $this->gateway->CreateUser();
                         break;
@@ -53,7 +53,7 @@ class taskController
 						break;
 
 
-						case "CreateTransaction":
+						case "create-transaction":
 
 						 $this->gateway->CreateTransaction();
 						 break;
@@ -64,17 +64,24 @@ class taskController
 						 $this->gateway->CreateCard();
 						 break;
 
-						 case "allTransaction":
+						 case "all-transaction":
+
+                             $response = $this->gateway->allTransaction();
+
+                             if ($response == null){
+                                 echo json_encode (['message'=>'No id in dataabse!']);
+                                 break;
+
+                             }echo json_encode($response);
+                             break;
 
 
 
-                         $response = $this->gateway->allTransaction();
 
-						 echo json_encode($response);
-						 break;
+
 
 						 case "amountAndTransaction":
-						 $response = $this->gateway->amountAndTransaction();
+                             $response = $this->gateway->amountAndTransaction();
 						 echo json_encode($response);
 						 break;
 

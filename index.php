@@ -13,6 +13,8 @@ spl_autoload_register(function ($class){
 });
 
 
+
+
 $parts = explode("/", $_SERVER["REQUEST_URI"]);
 
 if ($parts[1] != "start"){

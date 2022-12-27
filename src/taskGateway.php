@@ -1,22 +1,84 @@
 <?php
 /**
- * @OA\Info(title="Search API this is test", version="1.0.0")
+ * @OA\Info(title="Search API", version="1.0.0")
  */
 class taskGateway
 {
 	private PDO $conn;
+	public $idd;
 
 	public function __construct (Database $database)
 	{
 		$this->conn=$database->getConnection();
 	}
 
+
+    /**
+     *    @OA\Post(
+     *   path="/start/create-user",
+     *
+     * summary="Create a new user.", tags={"Post"},
+     * @OA\RequestBody(
+     *    @OA\MediaType(
+     *        mediaType="application/json",
+     *        @OA\Schema(
+     *            @OA\Property(
+     *                property="id",
+     *                type="integer",
+     *                 example="4",
+     *            ),
+     *            @OA\Property(
+     *                property="date_entered",
+     *                type="varchar",
+     *                 example="11",
+     *            ),
+     *            @OA\Property(
+     *                property="shop_id",
+     *                type="integer",
+     *                example="1",
+     *            ),
+     *
+     *              @OA\Property(
+     *                property="username",
+     *                type="varchar",
+     *                example="mirko43",
+     *            ),
+     *              @OA\Property(
+     *                property="password",
+     *                type="varchar",
+     *                example="Test0011",
+     *            ),
+     *            @OA\Property(
+     *                property="type",
+     *                type="varchar",
+     *                example="test",
+     *            ),
+     *              @OA\Property(
+     *                property="status",
+     *                type="varchar",
+     *                example="activ",
+     *            ),
+     *        ),
+     *    ),
+     * ),
+     * @OA\Response(response="200", description="Success"),
+     * @OA\Response(response="404", description="Not found"),
+     * )
+     */
+
+
+
 	//Kreiranje usera
 	public function CreateUser()
     {
 		$data=json_decode(file_get_contents("php://input"));
-
-
+		$id=$data->id;
+		$date_entered=$data->date_entered;
+		$shop_id=$data->shop_id;
+		$username=$data->username;
+		$password=$data->password;
+		$type=$data->type;
+		$status=$data->status;
 
 		if($data->id==''){
 
@@ -36,9 +98,24 @@ class taskGateway
 					echo json_encode (['status'=>'failed','msg'=>'Users status didnt provided!']);
 		}else
 		{
-			$query="INSERT INTO users(id,date_entered,shop_id,username,password,type,status)";
-            $query.="VALUES('$data->id','$data->date_entered','$data->shop_id','$data->username','$data->password','$data->type','$data->status')";
+			$query="INSERT INTO users
+                    SET
+                      id = :id,
+                      date_entered = :date_entered,
+                      shop_id=:shop_id,
+                      username=:username,
+                      password=:password,
+                      type=:type,status=:status";
             $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(":id",$id);
+            $stmt->bindValue(":date_entered",$date_entered);
+			$stmt->bindValue(":shop_id",$shop_id);
+            $stmt->bindValue(":username",$username);
+            $stmt->bindValue(":password",$password);
+            $stmt->bindValue(":type",$type);
+            $stmt->bindValue(":status",$status);
+
+
 
             $stmt->execute();
         }
@@ -190,11 +267,12 @@ class taskGateway
 
 	}
 
-	/**
+
+    /**
      *    @OA\Post(
-     *   path="/start/allTransaction",
+     *   path="/start/all-transaction",
      *
-     *   tags={"Get transaction"},
+     *   tags={"Post"},
      *   @OA\RequestBody(
      *       @OA\MediaType(
      *          mediaType="application/json",
@@ -215,11 +293,15 @@ class taskGateway
 
 
 
+
+
 	//Pregled svih transakcija za shop
-	public function allTransaction()
+    public function allTransaction()
 	{
 		$date=json_decode(file_get_contents("php://input"));
 		$id=$date->id;
+
+
         $query="SELECT * FROM `transaction` WHERE `shop_id`IN(SELECT `shop_id` from transaction) and id=:id";
         $response=array();
         $stmt = $this->conn->prepare($query);
@@ -229,7 +311,7 @@ class taskGateway
         $response=array();
 
         if($stmt)
-		{
+        {
             $i=0;
             $data=array();
 
@@ -248,8 +330,13 @@ class taskGateway
                 $i++;
             }
 
-	    }
-        return $data;
+        }
+        if (!empty($data))
+            return $data;
+        else
+            return null;
+
+
 
 	}
 
