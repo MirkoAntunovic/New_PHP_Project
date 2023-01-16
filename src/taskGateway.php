@@ -1,5 +1,6 @@
 <?php
 use OpenApi\Annotations as OA;
+use OpenApi\Annotations\Response;
 
 /**
  * @OA\Info(title="Search API", version="1.0.0")
@@ -719,6 +720,112 @@ class taskGateway
 
 
 
+
+     public static $names =[
+           [
+            "name" =>"mirko",
+            "lastname" =>"antunovic",
+            "yearOfBorn"=>"1234",
+             "status"=>"active"
+           ],
+
+            [
+            "name" =>"mate",
+            "lastname" =>"pavic",
+             "yearOfBorn"=>"12345",
+             "status"=>"deactive"
+           ],
+
+              [
+            "name" =>"ivan",
+            "lastname" =>"ivic",
+             "yearOfBorn"=>"1234",
+
+             "status"=>"active"
+           ],
+              [
+            "name" =>"ivan",
+            "lastname" =>"pravdic",
+             "yearOfBorn"=>"1234",
+             "status"=>"deactive"
+           ],
+
+            ];
+
+     public  $data =[
+          [
+           "name" =>"mirko",
+           "adress" =>"livno"
+
+          ],
+
+           [
+           "name" =>"mate",
+           "adress" =>"zagreb"
+
+          ],
+
+             [
+           "name" =>"ivan",
+           "adress" =>"split"
+
+          ],
+          [
+           "name" =>"ljubo",
+           "adress" =>"zagreb"
+
+          ],
+             [
+           "name" =>"ivan",
+           "adress" =>"mostar"
+          ],
+
+           ];
+
+
+     public static function test($activ, $kay, $value){
+
+         foreach($activ as $all){
+             if ($all[$kay]==$value){
+
+                 $rez[]=$all;
+             }
+
+         }
+
+         return $rez;
+
+
+
+
+
+        }
+
+    public function mojtest($jj,$funi)
+    {
+
+        foreach($jj as $w){
+
+            if ($funi($w))
+
+                $p[]=$w;
+
+        }
+
+
+         return $p;
+     }
+
+
+    public function testmoj(){
+        
+
+        $aa=taskGateway::$names;
+
+        $ss=taskGateway::test($aa, "status","deactive");
+
+        return $ss;
+    }
 
 }
 

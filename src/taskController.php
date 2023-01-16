@@ -1,4 +1,5 @@
 <?php
+use OpenApi\Annotations\Examples;
 
 
 
@@ -10,6 +11,8 @@ class taskController
 	{
 
 	}
+
+
 
 	public function processRequest(string $method, ?string $endpoint): void
 
@@ -94,14 +97,46 @@ class taskController
 						 $this->gateway->login();
 						 break;
 
+                         case "examples":
+
+							 $ss=$this->gateway->names;
+
+                             $fnn=$this->gateway->testmoj();
+
+							 foreach($fnn as $q){
+
+
+								echo nl2br("1-".$q['lastname']."\n");
+
+
+                             }
+
+
+
+							 $o=$this->gateway->data;
+                             $fn=$this->gateway->mojtest($o, function ($t){
+
+								return  $t["adress"] === "zagreb";
+                             }
+
+
+
+								 );
+
+
+							foreach( $fn as $r)
+                             {
+                                 echo ("2-".$r['name']."\n");
+								
+
+
+                             }
 
 
 
 
 
-
-
-
+							 break;
 
 				}
 
@@ -114,6 +149,10 @@ class taskController
 
 
 		}
+
+
+
+
 
 
 }

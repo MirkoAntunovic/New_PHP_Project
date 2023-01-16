@@ -23,6 +23,7 @@ if ($parts[1] != "start"){
 	exit;
 
 }
+header('Content-Type:application/json');
 
 
 $endpoint = $parts[2] ?? null;
@@ -30,6 +31,7 @@ $endpoint = $parts[2] ?? null;
 $Database = new Database("localhost","db_task","root","");
 
 $gateway=new taskGateway($Database);
+
 
 $controller = new taskController($gateway);
 $controller->processRequest($_SERVER["REQUEST_METHOD"], $endpoint);
