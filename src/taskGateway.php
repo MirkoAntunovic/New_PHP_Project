@@ -117,7 +117,7 @@ class taskGateway
             $stmt->bindValue(":password",$password);
             $stmt->bindValue(":type",$type);
             $stmt->bindValue(":status",$status);
-
+            // ovo je test
 
 
             $stmt->execute();
